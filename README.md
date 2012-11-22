@@ -7,6 +7,11 @@ Description
 A Puppet report handler for sending log events to
 [Cube](https://github.com/square/cube).
 
+It sends an event called `puppet_log` to Cube with data including the
+host name of the Puppet client and contents of the log entry:
+
+        data = { host: hostname, output: log_entry }
+  
 Requirements
 ------------
 
