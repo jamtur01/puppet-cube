@@ -1,5 +1,6 @@
 require 'yaml'
 require 'cube'
+require 'date'
 
 Puppet::Reports.register_report(:cube) do
 
@@ -15,7 +16,9 @@ Puppet::Reports.register_report(:cube) do
     $cube = Cube::Client.new CONFIG[:host], CONFIG[:port]
     type = "puppet_log"
     self.logs.each do |log|
-      $cube.send type, log
+      time = DateTime.now
+      data = { host: self.host, output: log }
+      $cube.send type, time, data
     end
   end
 end
