@@ -15,15 +15,15 @@ host name of the Puppet client and contents of the log entry:
 Requirements
 ------------
 
-* `cube-ruby`
-* Ruby 1.9.x
+* `rest-client`
+* `json`
 
 Installation & Usage
 --------------------
 
-1.  Install the `cube-ruby` gem on your Puppet master
+1.  Install the `rest-client` and `json` gems on your Puppet master
 
-        $ sudo gem install cube-ruby
+        $ sudo gem install rest-client json
 
 2.  Install puppet-cube as a module in your Puppet master's module
     path.

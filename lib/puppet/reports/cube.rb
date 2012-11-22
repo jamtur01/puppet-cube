@@ -1,6 +1,7 @@
 require 'yaml'
-require 'cube'
 require 'date'
+require 'json'
+require 'rest-client'
 
 Puppet::Reports.register_report(:cube) do
 
@@ -13,12 +14,17 @@ Puppet::Reports.register_report(:cube) do
   DESC
 
   def process
-    $cube = Cube::Client.new CONFIG[:host], CONFIG[:port]
+    request = RestClient::Resource.new("http://#{CONFIG[:host]}:#{CONFIG[:port]}")
+    endpoint_path = '/1.0/event/put'
     type = "puppet_log"
+
     self.logs.each do |log|
-      time = DateTime.now
-      data = { host: self.host, output: log }
-      $cube.send type, time, data
+      event = [{
+        :type => type,
+        :time => DateTime.now,
+        :data => { :host => self.host, :output => log },
+      }]
+      request[endpoint_path].post event.to_json
     end
   end
 end
